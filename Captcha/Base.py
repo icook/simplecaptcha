@@ -95,7 +95,7 @@ class Factory(object):
         """Removed expired tests"""
         expiredIds = []
         now = time.time()
-        for inst in self.storedInstances.itervalues():
+        for inst in self.storedInstances.values():
             if inst.creationTime + self.lifetime < now:
                 expiredIds.append(inst.id)
         for id in expiredIds:

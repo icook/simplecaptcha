@@ -21,7 +21,7 @@ from mod_python import apache
 
 
 def _getFactory(req):
-    return Captcha.PersistentFactory("/tmp/pycaptcha_%s" % req.interpreter)
+    return Captcha.PersistentFactory("/tmp/pycaptcha_{}".format(req.interpreter))
 
 
 def test(req, name=Tests.__all__[0]):
@@ -34,7 +34,7 @@ def test(req, name=Tests.__all__[0]):
     others = []
     for t in Tests.__all__:
         if t != name:
-            others.append('<li><a href="?name=%s">%s</a></li>' % (t,t))
+            others.append('<li><a href="?name={}">{}</a></li>'.format(t,t))
     others = "\n".join(others)
 
     return """<html>
@@ -44,36 +44,36 @@ def test(req, name=Tests.__all__[0]):
 <body>
 <h1>PyCAPTCHA Example (for mod_python)</h1>
 <p>
-  <b>%s</b>:
-  %s
+  <b>{}</b>:
+  {}
 </p>
 
-<p><img src="image?id=%s"/></p>
+<p><img src="image?id={}"/></p>
 <p>
   <form action="solution" method="get">
     Enter the word shown:
     <input type="text" name="word"/>
-    <input type="hidden" name="id" value="%s"/>
+    <input type="hidden" name="id" value="{}"/>
   </form>
 </p>
 
 <p>
 Or try...
 <ul>
-%s
+{}
 </ul>
 </p>
 
 </body>
 </html>
-""" % (test.__class__.__name__, test.__doc__, test.id, test.id, others)
+""".format(test.__class__.__name__, test.__doc__, test.id, test.id, others)
 
 
 def image(req, id):
     """Generate an image for the CAPTCHA with the given ID string"""
     test = _getFactory(req).get(id)
     if not test:
-        raise apache.SERVER_RETURN, apache.HTTP_NOT_FOUND
+        raise apache.SERVER_RETURN(apache.HTTP_NOT_FOUND)
     req.content_type = "image/jpeg"
     test.render().save(req, "JPEG")
     return apache.OK
@@ -83,7 +83,7 @@ def solution(req, id, word):
     """Grade a CAPTCHA given a solution word"""
     test = _getFactory(req).get(id)
     if not test:
-        raise apache.SERVER_RETURN, apache.HTTP_NOT_FOUND
+        raise apache.SERVER_RETURN(apache.HTTP_NOT_FOUND)
 
     if not test.valid:
         # Invalid tests will always return False, to prevent
@@ -100,14 +100,14 @@ def solution(req, id, word):
 </head>
 <body>
 <h1>PyCAPTCHA Example</h1>
-<h2>%s</h2>
-<p><img src="image?id=%s"/></p>
-<p><b>%s</b></p>
-<p>You guessed: %s</p>
-<p>Possible solutions: %s</p>
+<h2>{}</h2>
+<p><img src="image?id={}"/></p>
+<p><b>{}</b></p>
+<p>You guessed: {}</p>
+<p>Possible solutions: {}</p>
 <p><a href="test">Try again</a></p>
 </body>
 </html>
-""" % (test.__class__.__name__, test.id, result, word, ", ".join(test.solutions))
+""".format(test.__class__.__name__, test.id, result, word, ", ".join(test.solutions))
 
 ### The End ###

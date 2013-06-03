@@ -8,12 +8,14 @@
 
 from Captcha.Visual import Tests
 from Captcha import Factory
-import BaseHTTPServer, urlparse, sys
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import sys
+from urllib.parse import urlparse
 
 
-class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        scheme, host, path, parameters, query, fragment = urlparse.urlparse(self.path)
+        scheme, host, path, parameters, query, fragment = urlparse(self.path)
 
         # Split the path into segments
         pathSegments = path.split('/')[1:]
@@ -47,7 +49,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_response(404)
         self.send_header("Content-Type", "text/html")
         self.end_headers()
-        self.wfile.write("<html><body><h1>No such resource</h1></body></html>")
+        self.wfile.write("<html><body><h1>No such resource</h1></body></html>".encode("utf-8"))
 
     def handleRootPage(self, testName):
         self.send_response(200)
@@ -60,7 +62,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         others = []
         for t in Tests.__all__:
             if t != testName:
-                others.append('<li><a href="/?test=%s">%s</a></li>' % (t,t))
+                others.append('<li><a href="/?test={}">{}</a></li>'.format(t,t))
         others = "\n".join(others)
 
         self.wfile.write("""<html>
@@ -70,13 +72,13 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 <body>
 <h1>PyCAPTCHA Example</h1>
 <p>
-  <b>%s</b>:
-  %s
+  <b>{}</b>:
+  {}
 </p>
 
-<p><img src="/images/%s"/></p>
+<p><img src="/images/{}"/></p>
 <p>
-  <form action="/solutions/%s" method="get">
+  <form action="/solutions/{}" method="get">
     Enter the word shown:
     <input type="text" name="word"/>
   </form>
@@ -85,13 +87,13 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 <p>
 Or try...
 <ul>
-%s
+{}
 </ul>
 </p>
 
 </body>
 </html>
-""" % (test.__class__.__name__, test.__doc__, test.id, test.id, others))
+""".format(test.__class__.__name__, test.__doc__, test.id, test.id, others).encode("utf-8"))
 
     def handleImagePage(self, id):
         test = self.captchaFactory.get(id)
@@ -126,22 +128,22 @@ Or try...
 </head>
 <body>
 <h1>PyCAPTCHA Example</h1>
-<h2>%s</h2>
-<p><img src="/images/%s"/></p>
-<p><b>%s</b></p>
-<p>You guessed: %s</p>
-<p>Possible solutions: %s</p>
+<h2>{}</h2>
+<p><img src="/images/{}"/></p>
+<p><b>{}</b></p>
+<p>You guessed: {}</p>
+<p>Possible solutions: {}</p>
 <p><a href="/">Try again</a></p>
 </body>
 </html>
-""" % (test.__class__.__name__, test.id, result, word, ", ".join(test.solutions)))
+""".format(test.__class__.__name__, test.id, result, word, ", ".join(test.solutions)).encode("utf-8"))
 
 
 def main(port):
-    print "Starting server at http://localhost:%d/" % port
+    print("Starting server at http://localhost:{}/".format(port))
     handler = RequestHandler
     handler.captchaFactory = Factory()
-    BaseHTTPServer.HTTPServer(('', port), RequestHandler).serve_forever()
+    HTTPServer(('', port), RequestHandler).serve_forever()
 
 if __name__ == "__main__":
     # The port number can be specified on the command line, default is 8080
