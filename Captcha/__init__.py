@@ -34,8 +34,8 @@ checkVersion()
 
 
 # Convenience imports
-from Base import *
-import File
-import Words
+from Captcha.Base import *
+import Captcha.File
+import Captcha.Words
 
 ### The End ###

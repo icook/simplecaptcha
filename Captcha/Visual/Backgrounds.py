@@ -9,7 +9,7 @@ Background layers for visual CAPTCHAs
 
 from Captcha.Visual import Layer, Pictures
 import random, os
-import ImageDraw, Image
+from PIL import Image, ImageDraw
 
 
 class SolidColor(Layer):
@@ -37,11 +37,11 @@ class Grid(Layer):
     def render(self, image):
         draw = ImageDraw.Draw(image)
 
-        for i in xrange(image.size[0] / self.size + 1):
+        for i in range(image.size[0] / self.size + 1):
             draw.line( (i*self.size+self.offset[0], 0,
                         i*self.size+self.offset[0], image.size[1]), fill=self.foreground)
 
-        for i in xrange(image.size[0] / self.size + 1):
+        for i in range(image.size[0] / self.size + 1):
             draw.line( (0, i*self.size+self.offset[1],
                         image.size[0], i*self.size+self.offset[1]), fill=self.foreground)
 
@@ -55,8 +55,8 @@ class TiledImage(Layer):
 
     def render(self, image):
         tile = Image.open(self.tileName)
-        for j in xrange(-1, int(image.size[1] / tile.size[1]) + 1):
-            for i in xrange(-1, int(image.size[0] / tile.size[0]) + 1):
+        for j in range(-1, int(image.size[1] / tile.size[1]) + 1):
+            for i in range(-1, int(image.size[0] / tile.size[0]) + 1):
                 dest = (int((self.offset[0] + i) * tile.size[0]),
                         int((self.offset[1] + j) * tile.size[1]))
                 image.paste(tile, dest)
@@ -81,11 +81,11 @@ class RandomDots(Layer):
         self.colors = colors
         self.dotSize = dotSize
         self.numDots = numDots
-	self.seed = random.random()
+        self.seed = random.random()
 
     def render(self, image):
         r = random.Random(self.seed)
-        for i in xrange(self.numDots):
+        for i in range(self.numDots):
             bx = int(r.uniform(0, image.size[0]-self.dotSize))
             by = int(r.uniform(0, image.size[1]-self.dotSize))
             image.paste(r.choice(self.colors), (bx, by,

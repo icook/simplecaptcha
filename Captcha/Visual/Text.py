@@ -9,7 +9,7 @@ Text generation for visual CAPTCHAs.
 
 import random, os
 from Captcha import Visual, File
-import ImageFont, ImageDraw
+from PIL import ImageFont, ImageDraw
 
 
 class FontFactory(File.RandomFileFactory):
@@ -77,7 +77,7 @@ class TextLayer(Visual.Layer):
 
     def render(self, img):
         font = ImageFont.truetype(*self.font)
-    	textSize = font.getsize(self.text)
+        textSize = font.getsize(self.text)
         draw = ImageDraw.Draw(img)
 
         # Find the text's origin given our alignment and current image size

@@ -21,7 +21,7 @@ __all__ = ["BaseCaptcha", "Factory", "PersistentFactory"]
 
 def randomIdentifier(alphabet = string.ascii_letters + string.digits,
                      length = 24):
-    return "".join([random.choice(alphabet) for i in xrange(length)])
+    return "".join([random.choice(alphabet) for i in range(length)])
 
 
 class BaseCaptcha(object):
@@ -122,6 +122,6 @@ class PersistentFactory(Factory):
        """
     def __init__(self, filename, lifetime=60*15):
         Factory.__init__(self, lifetime)
-	self.storedInstances = shelve.open(filename)
+        self.storedInstances = shelve.open(filename)
 
 ### The End ###

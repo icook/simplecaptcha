@@ -11,4 +11,4 @@ g = PseudoGimpy()
 i = g.render()
 i.save("output.png")
 i.show()
-print g.solutions
+print(g.solutions)

@@ -8,7 +8,7 @@ Distortion layers for visual CAPTCHAs
 #
 
 from Captcha.Visual import Layer
-import ImageDraw, Image
+from PIL import ImageDraw, Image
 import random, math
 
 
@@ -22,7 +22,7 @@ class WigglyBlocks(Layer):
 
     def render(self, image):
         r = random.Random(self.seed)
-        for i in xrange(self.iterations):
+        for i in range(self.iterations):
             # Select a block
             bx = int(r.uniform(0, image.size[0]-self.blockSize))
             by = int(r.uniform(0, image.size[1]-self.blockSize))
@@ -53,17 +53,17 @@ class WarpBase(Layer):
 
     def render(self, image):
         r = self.resolution
-        xPoints = image.size[0] / r + 2
-        yPoints = image.size[1] / r + 2
+        xPoints = int(image.size[0] / r + 2)
+        yPoints = int(image.size[1] / r + 2)
         f = self.getTransform(image)
 
         # Create a list of arrays with transformed points
         xRows = []
         yRows = []
-        for j in xrange(yPoints):
+        for j in range(yPoints):
             xRow = []
             yRow = []
-            for i in xrange(xPoints):
+            for i in range(xPoints):
                 x, y = f(i*r, j*r)
 
                 # Clamp the edges so we don't get black undefined areas
@@ -78,8 +78,8 @@ class WarpBase(Layer):
         # Create the mesh list, with a transformation for
         # each square between points on the grid
         mesh = []
-        for j in xrange(yPoints-1):
-            for i in xrange(xPoints-1):
+        for j in range(yPoints-1):
+            for i in range(xPoints-1):
                 mesh.append((
                     # Destination rectangle
                     (i*r, j*r,

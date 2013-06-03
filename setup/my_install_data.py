@@ -37,7 +37,6 @@ PyOpenGL has its own licence. (it is almost identical.)
 # import some modules we need
 
 import os,sys,string
-from types import StringType,TupleType,ListType
 from distutils.util import change_root
 from distutils.filelist import FileList
 from distutils.command.install_data import install_data
@@ -75,7 +74,7 @@ class Data_Files:
         """
         from distutils.core import DEBUG
         if DEBUG:
-            print msg
+            print(msg)
 
 
     def finalize(self):
@@ -85,11 +84,11 @@ class Data_Files:
         if self.files == None:
             self.files = []
         if self.template != None:
-            if type(self.template) == StringType:
-                self.template = string.split(self.template,";")
+            if type(self.template) == str:
+                self.template = str(self.template).split(";")
             filelist = FileList(self.warn,self.debug_print)
             for line in self.template:
-                filelist.process_template_line(string.strip(line))
+                filelist.process_template_line(str(line).strip())
             filelist.sort()
             filelist.remove_duplicates()
             self.files.extend(filelist.files)
@@ -109,15 +108,15 @@ class my_install_data (install_data):
         if not isinstance(d, Data_Files):
             self.warn(("old-style data files list found "
                         "-- please convert to Data_Files instance"))
-            if type(d) is TupleType:
-                if len(d) != 2 or  not (type(d[1]) is ListType):
-                        raise DistutilsSetupError, \
+            if type(d) is tuple:
+                if len(d) != 2 or  not (type(d[1]) is list):
+                        raise DistutilsSetupError\
                           ("each element of 'data_files' option must be an "
                             "Data File instance, a string or 2-tuple (string,[strings])")
                 d = Data_Files(copy_to=d[0],files=d[1])
             else:
-                if not (type(d) is StringType):
-                        raise DistutilsSetupError, \
+                if not (type(d) is str):
+                        raise DistutilsSetupError\
                           ("each element of 'data_files' option must be an "
                            "Data File instance, a string or 2-tuple (string,[strings])")
                 d = Data_Files(files=[d])
@@ -161,7 +160,7 @@ class my_install_data (install_data):
             # copy all files
             for src in d.files:
                 if d.strip_dirs > 0:
-                    dst = string.join(string.split(src,os.sep)[d.strip_dirs:],os.sep)
+                    dst = os.sep.join(str(src).split(os.sep)[d.strip_dirs:])
                 else:
                     dst = src
                 if d.preserve_path:
@@ -170,7 +169,7 @@ class my_install_data (install_data):
                     out = self.copy_file(src, os.path.join(dir,dst))
                 else:
                     out = self.copy_file(src, dir)
-                if type(out) is TupleType:
+                if type(out) is tuple:
                     out = out[0]
                 self.outfiles.append(out)
 
