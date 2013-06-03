@@ -3,7 +3,7 @@ from distutils.core import setup
 from setup.my_install_data import *
 
 setup (name = "PyCAPTCHA",
-       version = "0.4",
+       version = "0.4-vayana",
        description = "A Python framework for CAPTCHA tests",
        maintainer = "Micah Dowty",
        maintainer_email = "micah@navi.cx",
