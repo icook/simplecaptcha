@@ -12,7 +12,7 @@ except:
     README = ''
 
 setup (name = "PyCAPTCHA",
-       version = "0.4.1",
+       version = "0.4-icook",
        description = "A Python framework for CAPTCHA tests",
        maintainer = "Micah Dowty",
        maintainer_email = "micah@navi.cx",

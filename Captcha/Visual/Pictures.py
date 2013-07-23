@@ -7,17 +7,15 @@ Random collections of images
 # Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 #
 
-from Captcha import File
-import Image
+from Captcha import file
+from PIL import Image
 
 
-class ImageFactory(File.RandomFileFactory):
+class ImageFactory(file.RandomFileFactory):
     """A factory that generates random images from a list"""
     extensions = [".png", ".jpeg"]
-    basePath = "pictures"
+    base_path = "pictures"
 
 
 abstract = ImageFactory("abstract")
 nature = ImageFactory("nature")
-
-### The End ###

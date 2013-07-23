@@ -2,40 +2,38 @@
 
 Base classes for visual CAPTCHAs. We use the Python Imaging Library
 to manipulate these images.
-"""
-#
-# PyCAPTCHA Package
-# Copyright (C) 2004 Micah Dowty <micah@navi.cx>
-#
 
-import Captcha
-import Image
+SimpleCaptcha Package
+Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
+"""
+import captcha
+from PIL import Image
 
 __all__ = ['ImageCaptcha', 'Layer']
 
 
-class ImageCaptcha(Captcha.BaseCaptcha):
-    """Base class for image-based CAPTCHA tests.
-       The render() function generates the CAPTCHA image at the given size by
-       combining Layer instances from self.layers, which should be created by
-       the subclass-defined getLayers().
-       """
-    defaultSize = (256,96)
+class ImageCaptcha(captcha.BaseCaptcha):
+    """Base class for image-based CAPTCHA tests.  The render() function
+    generates the CAPTCHA image at the given size by combining Layer instances
+    from self.layers, which should be created by the subclass-defined
+    getLayers().  """
+
+    defaultSize = (256, 96)
 
     def __init__(self, *args, **kwargs):
-        Captcha.BaseCaptcha.__init__(self)
-        self._layers = self.getLayers(*args, **kwargs)
+        captcha.BaseCaptcha.__init__(self)
+        self._layers = self.get_layers(*args, **kwargs)
 
-    def getImage(self):
-        """Get a PIL image representing this CAPTCHA test, creating it if necessary"""
+    def get_image(self):
+        """Get a PIL image representing this CAPTCHA test, creating it if
+        necessary"""
         if not self._image:
             self._image = self.render()
         return self._image
 
-    def getLayers(self):
-        """Subclasses must override this to return a list of Layer instances to render.
-           Lists within the list of layers are recursively rendered.
-           """
+    def get_layers(self):
+        """Subclasses must override this to return a list of Layer instances to
+        render.  Lists within the list of layers are recursively rendered.  """
         return []
 
     def render(self, size=None):
@@ -55,15 +53,14 @@ class ImageCaptcha(Captcha.BaseCaptcha):
 
 
 class Layer(object):
-    """A renderable object representing part of a CAPTCHA.
-       The render() function should return approximately the same result, regardless
-       of the image size. This means any randomization must occur in the constructor.
+    """A renderable object representing part of a CAPTCHA.  The render()
+    function should return approximately the same result, regardless of the
+    image size. This means any randomization must occur in the constructor.
 
-       If the render() function returns something non-None, it is taken as an image to
-       replace the current image with. This can be used to implement transformations
-       that result in a separate image without having to copy the results back to the first.
-       """
+    If the render() function returns something non-None, it is taken as an
+    image to replace the current image with. This can be used to implement
+    transformations that result in a separate image without having to copy the
+    results back to the first.  """
+
     def render(self, img):
         pass
-
-### The End ###

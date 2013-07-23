@@ -1,63 +1,63 @@
 """ Captcha.Visual.Tests
 
 Visual CAPTCHA tests
-"""
-#
-# PyCAPTCHA Package
-# Copyright (C) 2004 Micah Dowty <micah@navi.cx>
-#
 
-from Captcha.Visual import Text, Backgrounds, Distortions, ImageCaptcha
-from Captcha import Words
+SimpleCaptcha Package
+Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
+"""
+from captcha.visual import text, backgrounds, distortions, image_captcha
+from captcha import words
 import random
 
 __all__ = ["PseudoGimpy", "AngryGimpy", "AntiSpam"]
 
 
-class PseudoGimpy(ImageCaptcha):
+class PseudoGimpy(image_captcha):
     """A relatively easy CAPTCHA that's somewhat easy on the eyes"""
+
     def getLayers(self):
-        word = Words.defaultWordList.pick()
+        word = words.default_word_list.pick()
         self.addSolution(word)
         return [
             random.choice([
-                Backgrounds.CroppedImage(),
-                Backgrounds.TiledImage(),
+                backgrounds.CroppedImage(),
+                backgrounds.TiledImage(),
             ]),
-            Text.TextLayer(word, borderSize=1),
-            Distortions.SineWarp(),
+            text.TextLayer(word, borderSize=1),
+            distortions.SineWarp(),
             ]
 
 
-class AngryGimpy(ImageCaptcha):
+class AngryGimpy(image_captcha):
     """A harder but less visually pleasing CAPTCHA"""
+
     def getLayers(self):
-        word = Words.defaultWordList.pick()
+        word = words.defaultWordList.pick()
         self.addSolution(word)
         return [
-            Backgrounds.TiledImage(),
-            Backgrounds.RandomDots(),
-            Text.TextLayer(word, borderSize=1),
-            Distortions.WigglyBlocks(),
+            backgrounds.TiledImage(),
+            backgrounds.RandomDots(),
+            text.TextLayer(word, borderSize=1),
+            distortions.WigglyBlocks(),
             ]
 
 
-class AntiSpam(ImageCaptcha):
-    """A fixed-solution CAPTCHA that can be used to hide email addresses or URLs from bots"""
-    fontFactory = Text.FontFactory(20, "vera/VeraBd.ttf")
+class AntiSpam(image_captcha):
+    """A fixed-solution CAPTCHA that can be used to hide email addresses or
+    URLs from bots"""
+
+    fontFactory = text.FontFactory(20, "vera/VeraBd.ttf")
     defaultSize = (512,50)
 
     def getLayers(self, solution="murray@example.com"):
         self.addSolution(solution)
 
-        textLayer = Text.TextLayer(solution,
-                                   borderSize = 2,
-                                   fontFactory = self.fontFactory)
+        textLayer = text.TextLayer(solution,
+                                   borderSize=2,
+                                   fontFactory=self.fontFactory)
 
         return [
-            Backgrounds.CroppedImage(),
+            backgrounds.CroppedImage(),
             textLayer,
-            Distortions.SineWarp(amplitudeRange = (2, 4)),
+            distortions.SineWarp(amplitudeRange=(2, 4)),
             ]
-
-### The End ###

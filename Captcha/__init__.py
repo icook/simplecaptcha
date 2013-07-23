@@ -18,24 +18,9 @@ alternative was needed.
 # Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 #
 
-__version__ = "0.3-pre"
-
-
-# Check the python version here before we proceed further
-requiredPythonVersion = (2,2,1)
-def checkVersion():
-    import sys, string
-    if sys.version_info < requiredPythonVersion:
-        raise Exception("%s requires at least Python %s, found %s instead." % (
-            name,
-            string.join(map(str, requiredPythonVersion), "."),
-            string.join(map(str, sys.version_info), ".")))
-checkVersion()
-
+__version__ = "0.5"
 
 # Convenience imports
-from Base import *
-import File
-import Words
-
-### The End ###
+from captcha.base import *
+import captcha.file
+import captcha.words
