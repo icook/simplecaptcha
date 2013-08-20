@@ -12,11 +12,10 @@ Python, needed a CAPTCHA to automate its user creation process
 safely. All existing implementations the author could find were
 written in Java or for the .NET framework, so a simple Python
 alternative was needed.
+
+SimpleCaptcha Package
+Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 """
-#
-# PyCAPTCHA Package
-# Copyright (C) 2004 Micah Dowty <micah@navi.cx>
-#
 
 __version__ = "0.5"
 
