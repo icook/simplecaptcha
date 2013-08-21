@@ -1,18 +1,16 @@
 """ Captcha.Visual.Backgrounds
 
 Background layers for visual CAPTCHAs
+
+SimpleCaptcha Package
+Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 """
-#
-# PyCAPTCHA Package
-# Copyright (C) 2004 Micah Dowty <micah@navi.cx>
-#
-from captcha.visual import layer, pictures
+from simplecaptcha.visual import Layer, pictures
 import random
-import os
 from PIL import Image, ImageDraw
 
 
-class SolidColor(layer):
+class SolidColor(Layer):
     """A solid color background. Very weak on its own, but good to combine with
     other backgrounds.  """
 
@@ -23,7 +21,7 @@ class SolidColor(layer):
         image.paste(self.color)
 
 
-class Grid(layer):
+class Grid(Layer):
     """A grid of lines, with a given foreground color.  The size is given in
     pixels. The background is transparent, so another layer (like SolidColor)
     should be put behind it.  """
@@ -52,7 +50,7 @@ class Grid(layer):
                       fill=self.foreground)
 
 
-class TiledImage(layer):
+class TiledImage(Layer):
     """Pick a random image and a random offset, and tile the rendered image
     with it"""
 
@@ -70,7 +68,7 @@ class TiledImage(layer):
                 image.paste(tile, dest)
 
 
-class CroppedImage(layer):
+class CroppedImage(Layer):
     """Pick a random image, cropped randomly. Source images should be larger
     than the CAPTCHA."""
 
@@ -85,7 +83,7 @@ class CroppedImage(layer):
                         int(self.align[1] * (image.size[1] - i.size[1]))))
 
 
-class RandomDots(layer):
+class RandomDots(Layer):
     """Draw random colored dots"""
     def __init__(self, colors=("white", "black"), dot_size=4, num_dots=400):
         self.colors = colors

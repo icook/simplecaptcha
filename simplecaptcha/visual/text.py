@@ -6,8 +6,7 @@ SimpleCaptcha Package
 Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 """
 import random
-import os
-from Captcha import visual, file
+from simplecaptcha import visual, file
 from PIL import ImageFont, ImageDraw
 
 
@@ -17,7 +16,7 @@ class FontFactory(file.RandomFileFactory):
     directories, all *.ttf found in that directory will be added.  """
 
     extensions = [".ttf"]
-    basePath = "fonts"
+    base_path = "fonts"
 
     def __init__(self, sizes, *filenames):
         file.RandomFileFactory.__init__(self, *filenames)

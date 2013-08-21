@@ -5,14 +5,14 @@ Visual CAPTCHA tests
 SimpleCaptcha Package
 Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 """
-from captcha.visual import text, backgrounds, distortions, image_captcha
-from captcha import words
+from simplecaptcha.visual import text, backgrounds, distortions, ImageCaptcha
+from simplecaptcha import words
 import random
 
 __all__ = ["PseudoGimpy", "AngryGimpy", "AntiSpam"]
 
 
-class PseudoGimpy(image_captcha):
+class PseudoGimpy(ImageCaptcha):
     """A relatively easy CAPTCHA that's somewhat easy on the eyes"""
 
     def getLayers(self):
@@ -28,7 +28,7 @@ class PseudoGimpy(image_captcha):
             ]
 
 
-class AngryGimpy(image_captcha):
+class AngryGimpy(ImageCaptcha):
     """A harder but less visually pleasing CAPTCHA"""
 
     def getLayers(self):
@@ -42,7 +42,7 @@ class AngryGimpy(image_captcha):
             ]
 
 
-class AntiSpam(image_captcha):
+class AntiSpam(ImageCaptcha):
     """A fixed-solution CAPTCHA that can be used to hide email addresses or
     URLs from bots"""
 

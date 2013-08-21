@@ -1,33 +1,32 @@
-""" Captcha.Visual.BAse
+""" Captcha.Visual
 
-Base classes for visual CAPTCHAs. We use the Python Imaging Library
-to manipulate these images.
+This package contains functionality specific to visual CAPTCHA tests.
 
 SimpleCaptcha Package
 Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 """
-import captcha
+
+import simplecaptcha
 from PIL import Image
 
-__all__ = ['ImageCaptcha', 'Layer']
 
-
-class ImageCaptcha(captcha.BaseCaptcha):
+class ImageCaptcha(simplecaptcha.BaseCaptcha):
     """Base class for image-based CAPTCHA tests.  The render() function
     generates the CAPTCHA image at the given size by combining Layer instances
     from self.layers, which should be created by the subclass-defined
     getLayers().  """
 
-    defaultSize = (256, 96)
+    default_size = (256, 96)
 
     def __init__(self, *args, **kwargs):
-        captcha.BaseCaptcha.__init__(self)
+        simplecaptcha.BaseCaptcha.__init__(self)
         self._layers = self.get_layers(*args, **kwargs)
+        self._image = None
 
     def get_image(self):
         """Get a PIL image representing this CAPTCHA test, creating it if
         necessary"""
-        if not self._image:
+        if self._image is None:
             self._image = self.render()
         return self._image
 
@@ -39,14 +38,14 @@ class ImageCaptcha(captcha.BaseCaptcha):
     def render(self, size=None):
         """Render this CAPTCHA, returning a PIL image"""
         if size is None:
-            size = self.defaultSize
+            size = self.default_size
         img = Image.new("RGB", size)
-        return self._renderList(self._layers, Image.new("RGB", size))
+        return self._render_list(self._layers, img)
 
-    def _renderList(self, l, img):
+    def _render_list(self, l, img):
         for i in l:
             if type(i) == tuple or type(i) == list:
-                img = self._renderList(i, img)
+                img = self._render_list(i, img)
             else:
                 img = i.render(img) or img
         return img

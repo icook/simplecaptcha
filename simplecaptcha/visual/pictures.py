@@ -1,14 +1,12 @@
 """ Captcha.Visual.Pictures
 
 Random collections of images
-"""
-#
-# PyCAPTCHA Package
-# Copyright (C) 2004 Micah Dowty <micah@navi.cx>
-#
 
-from Captcha import file
-from PIL import Image
+SimpleCaptcha Package
+Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
+"""
+
+from simplecaptcha import file
 
 
 class ImageFactory(file.RandomFileFactory):

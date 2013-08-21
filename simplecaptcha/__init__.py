@@ -1,4 +1,4 @@
-""" Captcha.Base
+""" Captcha
 
 Base class for all types of CAPTCHA tests. All tests have one or
 more solution, determined when the test is generated. Solutions
@@ -9,15 +9,24 @@ of correct solutions. Some tests may only have one solution and require
 one solution, but other tests may require N correct solutions of M
 possible solutions.
 
+This is the PyCAPTCHA package, a collection of Python modules
+implementing CAPTCHAs: automated tests that humans should pass,
+but current computer programs can't. These tests are often
+used for security.
+
 SimpleCaptcha Package
 Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 """
+
+__version__ = "0.5"
+
+# Convenience imports
+import simplecaptcha.file
+import simplecaptcha.words
+
 import random
 import string
 import time
-import shelve
-
-__all__ = ["BaseCaptcha", "Factory", "PersistentFactory"]
 
 
 def random_identifier(alphabet=string.ascii_letters + string.digits,
@@ -37,7 +46,7 @@ class BaseCaptcha(object):
 
         # Each test has a unique identifier, used to refer to that test
         # later, and a creation time so it can expire later.
-        self.id = randomIdentifier()
+        self.id = random_identifier()
         self.creation_time = time.time()
 
     def add_solution(self, solution):

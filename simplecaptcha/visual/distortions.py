@@ -7,13 +7,13 @@ Distortion layers for visual CAPTCHAs
 # Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 #
 
-from captcha.visual import layer
-from PIL import ImageDraw, Image
+from simplecaptcha.visual import Layer
+from PIL import Image
 import random
 import math
 
 
-class WigglyBlocks(layer):
+class WigglyBlocks(Layer):
     """Randomly select and shift blocks of the image"""
 
     def __init__(self, block_size=16, sigma=0.01, iterations=300):
@@ -41,7 +41,7 @@ class WigglyBlocks(layer):
             image.paste(block, (bx+mx, by+my))
 
 
-class WarpBase(layer):
+class WarpBase(Layer):
     """Abstract base class for image warping. Subclasses define a function that
     maps points in the output image to points in the input image.  This warping
     engine runs a grid of points through this transform and uses PIL's mesh

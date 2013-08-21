@@ -7,7 +7,7 @@ Forked from PyCAPTCHA Copyright (C) 2004 Micah Dowty <micah@navi.cx>
 """
 import random
 import os
-from captcha import file
+from simplecaptcha import file
 
 
 class WordList(object):
@@ -18,7 +18,7 @@ class WordList(object):
 
     def __init__(self, filename, min_length=None, max_length=None):
         self.words = None
-        self.fileName = filename
+        self.filename = filename
         self.min_length = min_length
         self.max_length = max_length
 
@@ -49,6 +49,6 @@ class WordList(object):
 
 # Define several shared word lists that are read from disk on demand
 basic_english = WordList("basic-english")
-basic_english_restricted = WordList("basic-english", minLength=5, maxLength=8)
+basic_english_restricted = WordList("basic-english", min_length=5, max_length=8)
 
-defaultWordList = basic_english_restricted
+default_word_list = basic_english_restricted
