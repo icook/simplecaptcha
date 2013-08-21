@@ -35,14 +35,16 @@ class Grid(Layer):
     def render(self, image):
         draw = ImageDraw.Draw(image)
 
-        for i in range(image.size[0] / self.size + 1):
+        r1 = int(image.size[0] / (self.size + 1))
+        for i in range(r1):
             draw.line((i*self.size+self.offset[0],
                        0,
                        i*self.size+self.offset[0],
                        image.size[1]),
                       fill=self.foreground)
 
-        for i in range(image.size[0] / self.size + 1):
+        r2 = int(image.size[0] / (self.size + 1))
+        for i in range(r2):
             draw.line((0,
                        i*self.size+self.offset[1],
                        image.size[0],
