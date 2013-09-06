@@ -13,7 +13,7 @@ class TestCaptcha(unittest.TestCase):
         for cls in [PseudoGimpy, AngryGimpy, AntiSpam]:
             s = cls()
             assert len(s.get_layers()) > 1
-            assert s.get_image().size == (256, 96)
+            assert s.get_image().size[0] >= 256
 
 class TestWords(unittest.TestCase):
     """ Basic testing for the wordlist """

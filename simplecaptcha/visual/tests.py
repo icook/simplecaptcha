@@ -46,7 +46,7 @@ class AntiSpam(ImageCaptcha):
     """A fixed-solution CAPTCHA that can be used to hide email addresses or
     URLs from bots"""
 
-    fontFactory = text.FontFactory(20, "vera/VeraBd.ttf")
+    font_factory = text.FontFactory(20, "vera/VeraBd.ttf")
     default_size = (512,50)
 
     def get_layers(self, solution="murray@example.com"):
@@ -59,5 +59,5 @@ class AntiSpam(ImageCaptcha):
         return [
             backgrounds.CroppedImage(),
             text_layer,
-            distortions.SineWarp(amplitudeRange=(2, 4)),
+            distortions.SineWarp(amplitude_range=(2, 4)),
             ]
