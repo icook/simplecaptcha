@@ -15,29 +15,29 @@ __all__ = ["PseudoGimpy", "AngryGimpy", "AntiSpam"]
 class PseudoGimpy(ImageCaptcha):
     """A relatively easy CAPTCHA that's somewhat easy on the eyes"""
 
-    def getLayers(self):
+    def get_layers(self):
         word = words.default_word_list.pick()
-        self.addSolution(word)
+        self.add_solution(word)
         return [
             random.choice([
                 backgrounds.CroppedImage(),
                 backgrounds.TiledImage(),
             ]),
-            text.TextLayer(word, borderSize=1),
+            text.TextLayer(word, border_size=1),
             distortions.SineWarp(),
             ]
 
 
 class AngryGimpy(ImageCaptcha):
     """A harder but less visually pleasing CAPTCHA"""
+    def get_layers(self):
 
-    def getLayers(self):
-        word = words.defaultWordList.pick()
-        self.addSolution(word)
+        word = words.default_word_list.pick()
+        self.add_solution(word)
         return [
             backgrounds.TiledImage(),
             backgrounds.RandomDots(),
-            text.TextLayer(word, borderSize=1),
+            text.TextLayer(word, border_size=1),
             distortions.WigglyBlocks(),
             ]
 
@@ -47,17 +47,17 @@ class AntiSpam(ImageCaptcha):
     URLs from bots"""
 
     fontFactory = text.FontFactory(20, "vera/VeraBd.ttf")
-    defaultSize = (512,50)
+    default_size = (512,50)
 
-    def getLayers(self, solution="murray@example.com"):
-        self.addSolution(solution)
+    def get_layers(self, solution="murray@example.com"):
+        self.add_solution(solution)
 
-        textLayer = text.TextLayer(solution,
-                                   borderSize=2,
-                                   fontFactory=self.fontFactory)
+        text_layer = text.TextLayer(solution,
+                                   border_size=2,
+                                   font_factory=self.font_factory)
 
         return [
             backgrounds.CroppedImage(),
-            textLayer,
+            text_layer,
             distortions.SineWarp(amplitudeRange=(2, 4)),
             ]

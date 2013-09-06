@@ -15,11 +15,13 @@ except:
     README = ''
 
 setup (name = "simplecaptcha",
-       version = "0.4-icook",
+       version = "0.5",
        description = "A Python framework for CAPTCHA tests",
-       maintainer = "Micah Dowty",
-       maintainer_email = "micah@navi.cx",
+       maintainer = "Isaac Cook",
+       maintainer_email = "isaac@simpload.com",
+       author = "Micah Dowty",
+       author_email = "micah@navi.cx",
        license = "MIT",
        install_requires=requires,
-       packages=find_packages(),
+       packages=['simplecaptcha', 'simplecaptcha.visual'],
        )

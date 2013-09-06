@@ -10,8 +10,10 @@ class TestCaptcha(unittest.TestCase):
     """ Testing an actual full image render """
 
     def test_simple(self):
-        s = PseudoGimpy()
-        assert s.get_image().size == (256, 96)
+        for cls in [PseudoGimpy, AngryGimpy, AntiSpam]:
+            s = cls()
+            assert len(s.get_layers()) > 1
+            assert s.get_image().size == (256, 96)
 
 class TestWords(unittest.TestCase):
     """ Basic testing for the wordlist """
