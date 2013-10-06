@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/icook/SimpleCaptcha.png?branch=master
-    :target: https://travis-ci.org/icook/SimpleCaptcha
+.. image:: https://travis-ci.org/icook/simplecaptcha.png?branch=master
+    :target: https://travis-ci.org/icook/simplecaptcha
 
 About
 -----
@@ -14,11 +14,11 @@ credit for the majority of the functionality in the package is his.
 
 Main goals/changes from the original:
 
-- X Better PEP8 compliance, mainly with respect to module/function/parameter names
-- X A new name so it can be released via PIP for easy installation
+- **X** Better PEP8 compliance, mainly with respect to module/function/parameter names
+- **X** A new name so it can be released via PIP for easy installation
 - Integration with more modern methods for storing Captcha solutions
-- X Python 3.3 support and decent test coverage
-- X Refactor for use with Pillow since since PIL is being left behind
+- **X** Python 3.3 support and decent test coverage
+- **X** Refactor for use with Pillow since since PIL is being left behind
 
 Dependencies
 ------------
